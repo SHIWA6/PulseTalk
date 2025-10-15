@@ -19,7 +19,7 @@ const InteractiveHoverButton = React.forwardRef<
     className
   )}
   {...props}
->
+> <div className=" absolute top-3 mt-1 left-[20%] w-2 h-2  rounded-full animate-pulse bg-white"></div>
   <span className="inline-block translate-x-1 transition-all duration-300 group-hover:translate-x-12 group-hover:opacity-0">
     {text}
   </span>

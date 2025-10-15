@@ -34,7 +34,7 @@
     "daisyui": "^5.0.0",
     "date-fns": "^4.1.0",
     "emoji-picker-react": "^4.12.2",
-    "framer-motion": "^12.4.10",
+    "framer-motion": "^12.23.24",
     "gif-picker-react": "^1.4.0",
     "locomotive-scroll": "^4.1.4",
     "lucide-react": "^0.477.0",
