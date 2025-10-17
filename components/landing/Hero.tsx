@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { FooterComp } from "./footerComp"
 import Chatdemo from "./Chatdemo";
 import { motion } from "framer-motion";
+import { BentoGrid }  from './BentoGrid'
 
 
    const Hero: React.FC = () => { const router = useRouter();
@@ -65,7 +66,39 @@ import { motion } from "framer-motion";
         </div>
       </div>
     </div>
-  </section>
+  
+
+  <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 hidden md:flex flex-col items-center
+   " >
+    <svg className="w-6 h-6 animate-bounce"
+    fill="none"
+    stroke="currentColor"
+    viewBox="0 0 24 24"
+    xmlns="http://www.w3.org/2000/svg">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7"></path>
+    </svg>
+    <span className="mt-2 text-sm text-muted-foreground">
+      Scroll Down
+    </span>
+    </div>
+    </section>
+
+    <section className="max-w-7xl mx-auto my-8 border border-red-500 border-solid rounded-lg bg-slate-500 pt-0 pb-24 md:pt-32 md:pb-32 overflow-hidden">
+      <div className="border border-solid border-red-500 px-4 sm:px-6 lg:px-8">
+        <div className="border border-solid border-red-500 flex flex-col items-center">
+          <h1 className="text-4xl text-center mb-10 underline decoration-dashed font-extrabold"> Features</h1>
+          <p className="text-center mb-12 mx-auto text-lg">
+
+            Empover your conversation with real-time chat, expressive media, <br/> secure public rooms, and a sleek, user-freindly interface.
+          </p>
+                 
+                 <BentoGrid/>
+          
+        </div>
+      </div>
+    </section>
+    
+   
 </div>
 ) }
 

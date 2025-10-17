@@ -84,6 +84,7 @@ const TypingIndicator: React.FC<{ isUser?: boolean; avatar?: string; email: stri
   );
 };
 
+
 const ChatDemo: React.FC = () => {
   const [visibleMessages, setVisibleMessages] = useState<Message[]>([]);
   const [typingInfo, setTypingInfo] = useState<{ isTyping: boolean; messageIndex: number }>({ 
