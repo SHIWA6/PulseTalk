@@ -8,6 +8,7 @@ import { FooterComp } from "./footerComp"
 import Chatdemo from "./Chatdemo";
 import { motion } from "framer-motion";
 import { BentoGrid }  from './BentoGrid'
+import { AccordionComp } from '../ui/Minimal-accordion'
 
 
    const Hero: React.FC = () => { const router = useRouter();
@@ -96,6 +97,15 @@ import { BentoGrid }  from './BentoGrid'
           
         </div>
       </div>
+    </section>
+
+    <section className="py-10"
+    >
+      <div>
+        <h1 className="text-center text-4xl underline decoration-wavy "> FAQ </h1>
+
+      </div>
+      <AccordionComp/>
     </section>
     
    
