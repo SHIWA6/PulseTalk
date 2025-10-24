@@ -3,7 +3,8 @@ import { Footer } from '../ui/footer'
 
 function FooterComp() {
 
-    return (<div className='w-full'> 
+    return (
+    <div className='w-full'> 
      <Footer
      brandName='PulseTalk'
         socialLinks={[ {
@@ -20,14 +21,14 @@ function FooterComp() {
         {href: "/", label: "About"},
         {href: "/", label: "Blog"},
         {href: "/", label: "Pricing"},
-        {href: "/", label: "Products"},]},
+        {href: "/", label: "Products"},]}
 
      legalLinks={[
           { href: "/", label: "Privacy" },
           { href: "/", label: "Terms" },
         ]}
         copyright={{
-          text: "© 2025 ChatPulse",
+          text: "© 2025 Pulsetalk",
           license: "All rights reserved",
         }}
       />

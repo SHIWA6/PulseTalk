@@ -107,6 +107,10 @@ import { AccordionComp } from '../ui/Minimal-accordion'
       </div>
       <AccordionComp/>
     </section>
+
+    <footer className="bg-primary/2">
+    <FooterComp/>
+    </footer>
     
    
 </div>
