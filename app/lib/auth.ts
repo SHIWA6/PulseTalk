@@ -173,29 +173,32 @@ export const authOptions = {
     },
 
     async jwt({
-      token,
-      user,
-      account,
-      profile,
-    }: {
-      token: JWT;
-      user?: User | null;
-      account?: Account | null;
-      profile?: Profile | null;
-    }) {
-      if (user) {
-        token.id = user.id;
-        token.email = user.email;
-        
+  token,
+  user,
+  account,
+  profile,
+}: {
+  token: JWT;
+  user?: User | null;
+  account?: Account | null;
+  profile?: Profile | null;
+}) {
+  if (user) {
+    token.id = user.id;
+    token.email = user.email;
 
-        if (account?.provider === "google" && profile?.picture) {
-          token.avatar = profile.picture;
-        } else {
-          token.avatar = user.avatar;
-        }
-      }
-      return token;
-    },
+    // 👇 Safely cast to handle Google’s `picture` property
+    const googleProfile = profile as { picture?: string } | null;
+
+    if (account?.provider === "google" && googleProfile?.picture) {
+      token.avatar = googleProfile.picture;
+    } else {
+      token.avatar = user.avatar;
+    }
+  }
+  return token;
+},
+
 
     async session({
       session,
