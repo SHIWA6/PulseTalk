@@ -5,7 +5,7 @@ import { GlowingEffect } from "../ui/glowing-effect";
 
 export  function BentoGrid(){
     return(
-        <ul className="border border-solid border-green-500 grid grid-cols-1 grid-rows-none gap-4 md:grid-cols-12 md:grid-rows-3 lg:gap-4 xl:max-h-[34rem] xl:grid-rows-2"> 
+        <ul className="grid grid-cols-1 grid-rows-none gap-4 md:grid-cols-12 md:grid-rows-3 lg:gap-4 xl:max-h-[34rem] xl:grid-rows-2"> 
         <GridItem
         area="md:[grid-area:1/1/2/7] xl:[grid-area:1/1/2/5]"
         icons={<MessageCircle className="h-4 w-4" />}
@@ -57,23 +57,23 @@ const GridItem = ({
     description
 }: GridItemProps) => {
     return(
-        <li className= {cn("border border-solid border-red-500 min-h-[14rem] list-none", area)}>
-            <div className="border border-solid border-red-500 relative h-full rounded-[1.25rem] p-2 md:rounded-[1.5] md:p-3"> 
+        <li className= {cn("min-h-[14rem] list-none", area)}>
+            <div className="relative h-full rounded-[1.25rem] p-2 md:rounded-[1.5] md:p-3"> 
              
              <GlowingEffect
           spread={40}
           glow={true}
           disabled={false}
           proximity={64}
-          inactiveZone={0.01}
+          inactiveZone={0.22}
           borderWidth={3}
         />
 
 
-             <div className="relative flex h-full flex-col justify-between gap-6 overflow-hidden rounded-xl bg-background p-6 shadow-sm dark:shadow -[0px_0px_27px_0px_rgba(45,45,45,0.3)] md:p-6  border border-solid border-red-500"> 
-                <div className="relative flex flex-1 flex-col justify-between gap-3 border border-solid border-red-500">
+             <div className="relative flex h-full flex-col justify-between gap-6 overflow-hidden rounded-xl bg-background p-6 shadow-sm dark:shadow -[0px_0px_27px_0px_rgba(45,45,45,0.3)] md:p-6"> 
+                <div className="relative flex flex-1 flex-col justify-between gap-3">
 
-                    <div className="w-fit rounded-lg border border-solid border-green-500 bg-muted p-2
+                    <div className="w-fit rounded-lg  bg-muted p-2
                     ">
                         {icons}
                     </div>
