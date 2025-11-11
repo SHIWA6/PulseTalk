@@ -12,13 +12,13 @@ export default function ChatBase({ groupId }: { groupId: string }) {
     isConnected,
     roomTitle,
     sendMessage,
-    MAX_MESSAGE_LENGTH
+  
   } = useChat(groupId)
   
   const [messageText, setMessageText] = useState("")
 
   const handleSendMessage = () => {
-    if (!messageText.trim() || messageText.length > MAX_MESSAGE_LENGTH) return
+    if (!messageText.trim() || messageText.length > 5000) return
     
     sendMessage(messageText)
     
@@ -33,7 +33,7 @@ export default function ChatBase({ groupId }: { groupId: string }) {
         messageText={messageText}
         setMessageText={setMessageText}
         handleSendMessage={handleSendMessage}
-        maxMessageLength={MAX_MESSAGE_LENGTH}
+        maxMessageLength={5000}
       />
     </div>
   )
