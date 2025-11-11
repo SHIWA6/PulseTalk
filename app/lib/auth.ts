@@ -6,17 +6,6 @@ import { Session, User, Account, Profile } from "next-auth";
 import { JWT } from "next-auth/jwt";
 import prisma from "./prisma";
 
-interface FormCredentials {
-  email: string;
-  password: string;
-  confirmPassword?: string;
-}
-
-interface AuthResponse {
-  id: string;
-  email: string | null;
-  avatar?: string | null;
-}
 
 async function checkIfEmailUsedWithGoogle(email: string) {
   const user = await prisma.user.findUnique({
@@ -44,84 +33,68 @@ export const authOptions = {
     }),
 
     CredentialsProvider({
-      name: "Credentials",
-      credentials: {
-        email: { label: "Email", type: "text", placeholder: "johndoe@example.com" },
-        password: { label: "Password", type: "password" },
-        confirmPassword: { label: "Confirm Password", type: "password", optional: true },
-      },
-      async authorize(credentials?: FormCredentials): Promise<AuthResponse | null> {
-        if (!credentials) {
-          throw new Error("Missing credentials");
-        }
+  name: "Credentials",
+  credentials: {
+    email: { label: "Email", type: "text", placeholder: "johndoe@example.com" },
+    password: { label: "Password", type: "password" },
+    confirmPassword: { label: "Confirm Password", type: "password", optional: true },
+  },
+  async authorize(credentials): Promise<User | null> {
+    if (!credentials) throw new Error("Missing credentials");
 
-        const { email, password, confirmPassword } = credentials;
+    const { email, password, confirmPassword } = credentials as {
+      email: string;
+      password: string;
+      confirmPassword?: string;
+    };
 
-        if (!email || !password) {
-          throw new Error("Email and password are required.");
-        }
+    if (!email || !password) throw new Error("Email and password are required.");
+    await checkIfEmailUsedWithGoogle(email);
 
-        try {
-          await checkIfEmailUsedWithGoogle(email);
+    // ✅ SIGN-UP FLOW
+    if (confirmPassword) {
+      signUpSchema.parse({ email, password, confirmPassword });
 
-          if (confirmPassword) {
-            signUpSchema.parse({ email, password, confirmPassword });
-            
-            const existingUser = await prisma.user.findUnique({ where: { email } });
-            if (existingUser) {
-              throw new Error("Email already registered. Please use a different email or sign in.");
-            }
+      const existingUser = await prisma.user.findUnique({ where: { email } });
+      if (existingUser) throw new Error("Email already registered.");
 
-            const hashedPassword = await bcrypt.hash(password, 10);
-            const newUser = await prisma.user.create({
-              data: {
-                email,
-                password: hashedPassword,
-                avatar: "/avatar.png",
-              },
-            });
-            
-            return { id: newUser.id, email: newUser.email, avatar: newUser.avatar };
-          } 
-          else {
-            signInSchema.parse({ email, password });
+      const hashedPassword = await bcrypt.hash(password, 10);
+      const newUser = await prisma.user.create({
+        data: {
+          email,
+          password: hashedPassword,
+          avatar: "/avatar.png",
+        },
+      });
 
-            const user = await prisma.user.findUnique({ where: { email } });
-            if (!user) {
-              throw new Error("No user found. Please sign up first.");
-            }
-            
-            if (!user.password) {
-              throw new Error("This account doesn't have a password. Please sign in with Google.");
-            }
-            
-            const isPasswordValid = await bcrypt.compare(password, user.password);
-            if (!isPasswordValid) {
-              throw new Error("Invalid password.");
-            }
-            
-            if (!user.avatar) {
-              try {
-                const updatedUser = await prisma.user.update({
-                  where: { id: user.id },
-                  data: { avatar: "/avatar.png" }
-                });
-                return { id: updatedUser.id, email: updatedUser.email, avatar: updatedUser.avatar };
-              } catch {
-                return { id: user.id, email: user.email, avatar: "/avatar.png" };
-              }
-            }
-            
-            return { id: user.id, email: user.email, avatar: user.avatar };
-          }
-        } catch (error) {
-          if (error instanceof Error) {
-            throw new Error(`Sign-in failed: ${error.message}`);
-          }
-          throw new Error("Authentication error. Please try again later.");
-        }
-      }
-    }),
+      return {
+        id: newUser.id,
+        email: newUser.email!,
+        avatar: newUser.avatar ?? "/avatar.png",
+        name: newUser.email?.split("@")[0] ?? "User",
+      } as User; // ✅ force cast to NextAuth.User
+    }
+
+    // ✅ SIGN-IN FLOW
+    signInSchema.parse({ email, password });
+
+    const user = await prisma.user.findUnique({ where: { email } });
+    if (!user) throw new Error("User not found.");
+    if (!user.password)
+      throw new Error("This account doesn't have a password. Please sign in with Google.");
+
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) throw new Error("Invalid password.");
+
+    return {
+      id: user.id,
+      email: user.email!,
+      avatar: user.avatar ?? "/avatar.png",
+      name: user.email?.split("@")[0] ?? "User",
+    } as User;
+  },
+}),
+
   ],
 
   secret: process.env.NEXTAUTH_SECRET,
