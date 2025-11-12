@@ -1,4 +1,5 @@
 "use client"
+import { Variants } from "framer-motion";
 
 import { motion, AnimatePresence } from "framer-motion"
 import { useEffect, useState } from "react"
@@ -42,30 +43,35 @@ export default function PreLoader() {
     const initialPath = `M0 0 L${dimension.width} 0 L${dimension.width} ${dimension.height} Q${dimension.width/2} ${dimension.height + 500} 0 ${dimension.height} L0 0`
     const targetPath = `M0 0 L${dimension.width} 0 L${dimension.width} ${dimension.height} Q${dimension.width/2} ${dimension.height - 100} 0 ${dimension.height} L0 0`
     
-    const curve = {
-        initial: {
-            d: initialPath,
-            transition: {duration: 0.7, ease: [0.76, 0, 0.24, 1]}
-        },
-        exit: {
-            d: targetPath,
-            transition: {duration: 0.7, ease: [0.76, 0, 0.24, 1], delay: 0.3}
-        }
-    }
+   const curve: Variants = {
+  initial: {
+    d: initialPath,
+    transition: {
+      duration: 1,
+      ease: [0.25, 0.1, 0.25, 1] as [number, number, number, number], // ✅
+    },
+  },
+  exit: {
+    d: targetPath,
+    transition: {
+      duration: 1,
+      ease: [0.25, 0.1, 0.25, 1] as [number, number, number, number], // ✅
+    },
+  },
+};
 
-    const slideUp = {
-        initial: {
-            y: 0
-        },
-        exit: {
-            y: "-100vh",
-            transition: {
-                duration: 0.8,
-                ease: [0.76, 0, 0.24, 1],
-                delay: 0.2
-            }
-        }
-    }
+    
+const slideUp: Variants = {
+  initial: { y: 0 },
+  exit: { 
+    y: "100%", 
+    transition: { 
+      duration: 1, 
+      ease: [0.25, 0.1, 0.25, 1] as [number, number, number, number], // ✅ tuple cast
+      delay: 0.5 
+    } 
+  }
+};
 
     const opacity = {
         initial: {

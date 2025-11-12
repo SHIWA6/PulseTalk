@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 import Link, { LinkProps } from "next/link";
 import React, { useState, createContext, useContext } from "react";
 import { useRouter } from "next/navigation";
-import { AnimatePresence, motion } from "motion/react";
+import { AnimatePresence, motion , HTMLMotionProps } from "motion/react";
 import { IconMenu2, IconX } from "@tabler/icons-react";
 
 interface Links {
@@ -76,10 +76,11 @@ export const SidebarBody = (props: React.ComponentProps<typeof motion.div>) => {
   return (
     <>
       <DesktopSidebar {...props} />
-      <MobileSidebar {...(props as React.ComponentProps<"div">)} />
+      <MobileSidebar {...props} /> {/* ✅ no need to cast */}
     </>
   );
 };
+
 
 export const DesktopSidebar = ({
   className,
@@ -112,21 +113,21 @@ export const DesktopSidebar = ({
     </>
   );
 };
-
 export const MobileSidebar = ({
   className,
   children,
   ...props
-}: React.ComponentProps<"div">) => {
+}: HTMLMotionProps<"div">) => {
   const { open, setOpen } = useSidebar();
+
   return (
     <>
-      <div
+      <motion.div
         className={cn(
           "h-14 px-4 py-4 flex flex-row md:hidden items-center justify-between w-full",
-          // Mobile top bar aesthetic
           "bg-gradient-to-r from-slate-900 via-zinc-900 to-zinc-800 text-stone-100",
-          "border-b border-zinc-800/40 shadow-lg"
+          "border-b border-zinc-800/40 shadow-lg",
+          className
         )}
         {...props}
       >
@@ -142,13 +143,9 @@ export const MobileSidebar = ({
               initial={{ x: "-100%", opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
               exit={{ x: "-100%", opacity: 0 }}
-              transition={{
-                duration: 0.3,
-                ease: "easeInOut",
-              }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
               className={cn(
                 "fixed h-full w-full inset-0 p-10 z-[100] flex flex-col justify-between",
-                // Mobile drawer skin
                 "bg-gradient-to-b from-slate-900 via-zinc-900 to-zinc-800 text-stone-100",
                 "border-r border-zinc-800/40 shadow-2xl ring-1 ring-zinc-900/30"
               )}
@@ -159,11 +156,11 @@ export const MobileSidebar = ({
               >
                 <IconX className="hover:scale-110 active:scale-100 transition-transform" />
               </div>
-              {children}
+              {children as React.ReactNode}
             </motion.div>
           )}
         </AnimatePresence>
-      </div>
+      </motion.div>
     </>
   );
 };
