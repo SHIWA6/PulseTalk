@@ -13,8 +13,8 @@ type Message = {
 const mockMessages: Message[] = [
   {
     id: 1,
-    email: 'harshit@demo.com',
-    text: 'Hi babe!',
+    email: 'Aman@demo.com',
+    text: 'Hi!',
     avatar: 'https://i.pravatar.cc/150?img=14',
   },
   {
