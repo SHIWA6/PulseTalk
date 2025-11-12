@@ -119,7 +119,7 @@ function Signup() {
           Create your account
         </h2>
         <p className="mt-2 text-sm text-muted-foreground">
-          Join Chat Pulse today
+          Join Pulsetalk
         </p>
       </div>
 
