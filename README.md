@@ -76,7 +76,8 @@ Create a branch
 
 🧾 License
 
-MIT © Shiwa Pandey
+Copyright (c) 2025 Abhinav Sir (Leader)
+Copyright (c) 2025 Shiwa pandey (Contributor)
 
 
 🏁 Final Notes
@@ -91,6 +92,6 @@ Secure OAuth integration
 
 Full CI/CD deployment across Vercel + Render + Neon
 
-It’s fast, clean, production-ready — and built from scratch 💪
+It’s fast, clean, production-ready — 
 
 ⭐ Star this repo if you like it!
