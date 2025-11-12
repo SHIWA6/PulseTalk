@@ -259,7 +259,7 @@ function Home() {
                       onClick={(e) => {
                         e.preventDefault();
                         const roomLink = `${window.location.origin}/chat/${room.id}`;
-                        const twitterShareUrl = `https://twitter.com/intent/tweet?text=Join%20my%20ChatPulse%20room!&url=${encodeURIComponent(
+                        const twitterShareUrl = `https://twitter.com/intent/tweet?text=Join%20my%20PulseTalk%20room!&url=${encodeURIComponent(
                           roomLink
                         )}`;
                         window.open(twitterShareUrl, "_blank");
